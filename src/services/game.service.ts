@@ -2,6 +2,9 @@ import { NullableType } from "joi";
 import { GameDTO } from "../dto/game.dto";
 import { Console } from "../models/console.model";
 import { Game } from "../models/game.model";
+import { Review } from "../models/review.model";
+import { notFound } from "../error/NotFoundError";
+import { badRequest } from "../error/badRequest";
 
 export class GameService {
   public async getAllGames(): Promise<GameDTO[]> {
@@ -46,6 +49,25 @@ export class GameService {
       return game;
     }
     return null;
+  }
+
+  
+  public async deleteGame(id: number): Promise<void> {
+    const game = await Game.findByPk(id);
+
+    const reviews = await Review.findAll({
+      where: {game_id: {id}}
+    });
+
+    if(!game){
+      notFound("Console "+id);
+    }
+
+    if(reviews.length > 0){
+      badRequest("Can't delete game which has reviews");
+    }
+
+    game.destroy();
   }
 }
 
