@@ -3,6 +3,7 @@ import { GameDTO } from '../dto/game.dto'
 import { gameService } from '../services/game.service'
 import { consoleService } from "../services/console.service";
 import { notFound } from '../error/NotFoundError';
+import { ReviewDTO } from '../dto/review.dto';
 
 @Route('games')
 @Tags('Games')
@@ -52,4 +53,15 @@ export class GameController extends Controller {
   public async deleteGame(@Path() id: number): Promise<void> {
     await gameService.deleteGame(id);
   }
+
+ // Récupere les reviews par id du jeu
+ @Get("{id}/reviews")
+ public async getReviewsByGameId(@Path() id: number): Promise<ReviewDTO[]> {
+   const game = await gameService.getGameById(id);
+   if (!game) {
+     notFound("game id");
+   }
+   return gameService.getReviewsByGameById(id);
+ }
+
 }

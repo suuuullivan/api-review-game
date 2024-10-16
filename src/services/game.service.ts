@@ -69,6 +69,15 @@ export class GameService {
 
     game.destroy();
   }
+
+  public async getReviewsByGameById(id: number): Promise<Review[]> {
+    return await Review.findAll({
+      where: {
+        game_id: id
+      }
+    });
+  }
+
 }
 
 export const gameService = new GameService();
