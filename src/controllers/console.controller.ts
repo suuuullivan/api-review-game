@@ -7,6 +7,7 @@ import { Game } from "../models/game.model";
 import { Review } from "../models/review.model";
 import { Op } from "sequelize";
 import { badRequest } from "../error/badRequest";
+import { GameDTO } from "../dto/game.dto";
 
 @Route("consoles")
 @Tags("Consoles")
@@ -43,8 +44,8 @@ export class ConsoleController extends Controller {
   public async deleteConsole(@Path() id: number): Promise<void> {
     await consoleService.deleteConsole(id);
   }
-  
-  
+
+
 
   // Met à jour une console par ID
   @Patch("{id}")
@@ -58,6 +59,15 @@ export class ConsoleController extends Controller {
     if (updatedConsole == null)
       notFound(id.toString());
     return updatedConsole;
-
   }
+
+  @Get("{id}/games")
+  public async getGamesByConsoleId(@Path() id: number): Promise<GameDTO[]> {
+    const console = await consoleService.getConsoleById(id);
+    if (!console) {
+      notFound(`Console with id ${id} not found`);
+    }
+    return consoleService.getGamesByConsoleById(id);
+  }
+
 }

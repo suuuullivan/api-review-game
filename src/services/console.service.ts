@@ -71,6 +71,14 @@ export class ConsoleService {
     }
     return null;
   }
+
+  public async getGamesByConsoleById(id: number): Promise<Game[]> {
+    return await Game.findAll({
+      where: {
+        console_id: id
+      }
+    });
+  }
 }
 
 export const consoleService = new ConsoleService();
