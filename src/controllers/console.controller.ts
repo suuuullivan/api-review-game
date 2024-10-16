@@ -2,11 +2,6 @@ import { Controller, Get, Post, Delete, Route, Path, Body, Tags, Patch } from "t
 import { consoleService } from "../services/console.service";
 import { ConsoleDTO } from "../dto/console.dto";
 import { notFound } from "../error/NotFoundError";
-import { Console } from "../models/console.model";
-import { Game } from "../models/game.model";
-import { Review } from "../models/review.model";
-import { Op } from "sequelize";
-import { badRequest } from "../error/badRequest";
 import { GameDTO } from "../dto/game.dto";
 
 @Route("consoles")

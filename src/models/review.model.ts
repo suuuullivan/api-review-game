@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import sequelize from "../config/database"; // Connexion à la base de données
+import sequelize from "../config/database"; // Connection à la base de données
 import { Game } from "./game.model";
 
 export interface ReviewAttributes {
